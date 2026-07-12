@@ -10,6 +10,19 @@ MAX_RETRY_ATTEMPTS = 3
 DEFAULT_DELAY_MIN = 2.0
 DEFAULT_DELAY_MAX = 5.0
 
+# Per-account / global throttling defaults (used by src/throttler.py).
+# Conservative values chosen to avoid FloodWait bans across many accounts.
+DEFAULT_RATE_PER_MINUTE = 30
+DEFAULT_RATE_PER_HOUR = 100
+DEFAULT_RATE_PER_DAY = 1000
+DEFAULT_PER_ACCOUNT_CONCURRENCY = 3
+GLOBAL_MAX_CONCURRENCY = 5
+DEFAULT_JITTER_SECONDS = 5.0
+
+# Account warmup defaults (used by src/warmup.py-style ramp-up flows).
+DEFAULT_WARMUP_MESSAGES = 5
+DEFAULT_WARMUP_INTERVAL_MINUTES = 60
+
 # Message length limits
 TELEGRAM_MAX_MESSAGE_LENGTH = 4096
 MONITOR_MESSAGE_MAX_LENGTH = 4000  # Slightly less than Telegram limit for safety
