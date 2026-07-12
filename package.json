@@ -1,0 +1,29 @@
+{
+  "name": "telegram-panel",
+  "version": "1.0.0",
+  "description": "Telegram-Panel — React/TypeScript frontend for multi-account Telegram automation.",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/styles.css -o ./public/styles.css --minify",
+    "build:js": "node build.mjs",
+    "build": "npm run build:css && npm run build:js",
+    "dev": "node build.mjs --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "recharts": "^2.12.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "esbuild": "^0.23.1",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.4"
+  }
+}

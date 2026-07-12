@@ -37,6 +37,18 @@ build/
 dist/
 *.egg-info/
 
+# Node.js (frontend + backend)
+node_modules/
+public/bundle.js
+public/bundle.js.map
+public/styles.css
+
+# Backend data (SQLite)
+backend/data/
+*.db
+*.db-shm
+*.db-wal
+
 # Testing
 .pytest_cache/
 .coverage

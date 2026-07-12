@@ -163,6 +163,59 @@ Built on [Telethon](https://github.com/LonamiWebs/Telethon) with an `asyncio`-fi
 
 ---
 
+## Web Panel (Node.js + React)
+
+Alongside the Python bot, the repository ships a full-stack web panel that ports
+the same automation operations to Node.js using [GramJS](https://github.com/gram-js/gramjs).
+It exposes every operation through a JWT-protected REST API and a dark-themed
+React dashboard with sidebar navigation.
+
+```
+Telegram-Panel/
+├── backend/                       # Express + better-sqlite3 + GramJS API
+│   └── src/
+│       ├── server.js              # App entry, route registration
+│       ├── database/db.js         # SQLite schema (accounts, proxies, logs, settings, …)
+│       ├── services/
+│       │   ├── telegram.js        # TelegramService — reactions, votes, join/leave,
+│       │   │                      #   block, private messages, comments, bulk wrapper
+│       │   └── apiPool.js         # Round-robin API credential pool
+│       ├── utils/parseTelegramLink.js  # Private / public / topic link parser
+│       ├── middleware/auth.js     # JWT auth
+│       └── routes/                # auth, accounts, audience, messages,
+│                                  #   automation, proxies, analytics, settings
+├── src/                           # React + TypeScript frontend
+│   ├── App.tsx / pages/           # HashRouter routes, Login, Register, Dashboard
+│   ├── services/api.ts            # Typed API client (grouped method objects)
+│   └── components/dashboard/      # Overview, Automation, Proxies, Analytics,
+│                                  #   Settings, Accounts, Audience, Messaging panels
+└── build.mjs / tailwind.config.js # esbuild bundle + Tailwind CSS
+```
+
+**Run it:**
+
+```bash
+# Backend
+cd backend
+cp .env.example .env          # set TELEGRAM_API_ID / TELEGRAM_API_HASH and JWT_SECRET
+npm install
+npm start                     # http://localhost:4000
+
+# Frontend (from the repo root, in another shell)
+npm install
+npm run build                 # outputs public/bundle.js + public/styles.css
+# serve the public/ directory with any static file server
+```
+
+The automation endpoints accept either a single `accountId` or an `accountIds[]`
+array for bulk runs. Bulk operations use bounded concurrency, per-account error
+isolation, FloodWait handling, and revoked-session detection — mirroring the
+Python `execute_bulk_operation`. Every attempt is recorded in the
+`automation_logs` table and surfaced in the Automation → History tab and the
+Analytics panel.
+
+---
+
 ## Testing
 
 ```bash
